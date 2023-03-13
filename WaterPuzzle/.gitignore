@@ -6,3 +6,9 @@ rewriter.exe
 *.cmxa
 *.o
 .deps
+
+# project-specific
+.WaterPuzzle.ml.d
+.WaterPuzzleD.ml.d
+WaterPuzzle.ml
+

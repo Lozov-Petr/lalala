@@ -47,26 +47,22 @@ let rec eval set = function
 
 
 [@@@ocaml
-open GT
 open OCanren
 open OCanren.Std
 open HO
-     
-ocanren type answer = move list 
-                    
-let _ = 
+
+ocanren type answer = move GT.list
+
+let _ =
   Printf.printf "Test!\n";
-  Printf.printf "%s\n"
-  @@ show (answer) 
-  @@ Stdlib.List.hd
-  @@ Stream.take ~n:1
-  @@ run q (fun q -> ocanren {
-         fresh a, b, c, d in
-           FO.eval (5, 3, 0, 0) q (a, b, c, d) &
-           {a == 1 | d == 1}
-         }) (fun rr -> rr#reify prj_exn_answer)
+  run q (fun q -> ocanren {
+      fresh a, b, c, d in
+        FO.eval (5, 3, 0, 0) q (a, b, c, d) &
+        {a == 1 | d == 1}
+      }) (fun rr -> rr#reify prj_exn_answer)
+  |> OCanren.Stream.hd
+  |> OCanren.Std.List.to_list Fun.id
+  |> show (answer)
+  |> Printf.printf "%s\n"
+
 ]
-          
-
-
-      
